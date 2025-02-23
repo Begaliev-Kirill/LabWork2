@@ -5,6 +5,28 @@ st129977@student.spbu.ru , tg: @silly_kat
 ## Description
 Empty
 ## Build
-Empty
+#### To build project
+```bash
+make
+```
+#### To build tests
+```bash
+make test
+```
+#### To delete only created files 
+```bash
+make clean
+```
+#### To delete all created and compiled files
+```bash
+make cleanall
+```
 ## Run
-Empty
+#### To run program (DOES NOTHING)
+```bash
+./game
+```
+#### To run tests
+```bash 
+./test-game
+```
