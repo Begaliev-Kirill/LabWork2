@@ -1,53 +1,74 @@
 PROJECT = game
-
+LIBPROJECT = $(PROJECT).a
 TESTPROJECT = test-$(PROJECT)
 
-LIBPROJECT = $(PROJECT).a
-
-OBJECTS = beastFunction.o
-
-TEST_OBJECTS = test-game.o
-
-DEPS = (wildcard *.hpp)
-
-A = ar
-
-AFLAGS = rsv
-
 CXX = g++
-
-CXXFLAGS = -I. -std=c++17 -Werror -Wpedantic -Wall -g -fPIC
-
+CXXFLAGS = -Iinclude -std=c++17 -Werror -Wpedantic -Wall -g -fPIC
 LDXXFLAGS = $(CXXFLAGS) -L. -l:$(LIBPROJECT)
-
 LDGTESTFLAGS = $(LDXXFLAGS) -lgtest_main -lgtest -lpthread
+AR = ar
+ARFLAGS = rsv
+
+#Directories
+SRCDIR = src
+TESTDIR = test
+OBJDIR = obj
+BINDIR = bin
+TESTBINDIR = testbin
+
+#Files
+SRCS = $(filter-out $(SRCDIR)/main.cpp, $(wildcard $(SRCDIR)/*.cpp))
+TESTSRCS = $(wildcard $(TESTDIR)/*.cpp)
+OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
+TESTOBJS = $(patsubst $(TESTDIR)/%.cpp, $(OBJDIR)/%.o, $(TESTSRCS))
+
+#To solve conflict with gtest main and programm main
+MAINOBJ = $(OBJDIR)/main.o 
+
+TARGET = $(BINDIR)/$(PROJECT)
+TESTTARGET = $(TESTBINDIR)/$(TESTPROJECT)
 
 .PHONY: default
-
 default: all;
+all: $(TARGET)
 
-%.o: %.cpp $(DEPS)
-	$(CXX) -c -o $@ $< $(CXXFLAGS)
-	
-$(LIBPROJECT): $(OBJECTS)
-	$(A) $(AFLAGS) $@ $^
-	
-$(PROJECT): main.o $(LIBPROJECT)
-	$(CXX) -o $@ main.o $(LDXXFLAGS)
-	
-$(TESTPROJECT): $(LIBPROJECT) $(TEST_OBJECTS)
-	$(CXX) -o $@ $(TEST_OBJECTS) $(LDGTESTFLAGS)
+$(shell mkdir -p $(OBJDIR) $(BINDIR) $(TESTBINDIR))
 
-test: $(TESTPROJECT)
+#Project's building
+$(TARGET): $(MAINOBJ) $(LIBPROJECT)
+	$(CXX) $^ $(LDXXFLAGS) -o $@
 
-all: $(PROJECT)
+$(TESTTARGET): $(TESTOBJS) $(LIBPROJECT)
+	$(CXX) $^ $(LDGTESTFLAGS) -o $@
+
+$(LIBPROJECT): $(OBJS)
+	$(AR) $(ARFLAGS) $@ $^
+
+$(MAINOBJ): $(SRCDIR)/main.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+#.cpp turn into .o
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o: $(TESTDIR)/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+test: $(TESTTARGET)
+	./$(TESTTARGET)
 
 .PHONY: clean
 
 clean:
-	rm -f *.o
+	rm -rf $(OBJDIR)/* $(BINDIR)/* $(TESTBINDIR)/* .depend
 
 cleanall: clean
 	rm -f $(PROJECT)
 	rm -f $(LIBPROJECT)
 	rm -f $(TESTPROJECT)
+	rm -rf $(OBJDIR) $(BINDIR) $(TESTBINDIR)
+
+depend:
+	$(CXX) -MM $(CXXFLAGS) $(SRCS) $(TESTSRCS) > .depend
+
+-include .depend
