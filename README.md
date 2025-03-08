@@ -24,7 +24,7 @@ doxygen && make depend
 ./testbin/test-game
 ```
 #### Open documentation by doxygen
-https://Begaliev-Kirill.github.io/LabWork2/
+https://begaliev-kirill.github.io/LabWork2/
 or use this comands:
 ```bash
 doxygen
