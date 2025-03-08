@@ -119,7 +119,7 @@ Run tests (more than one time after building)</h3>
 <div class="fragment"><div class="line">./testbin/test-game</div>
 </div><!-- fragment --> <h3><a class="anchor" id="autotoc_md9"></a>
 Open documentation by doxygen</h3>
-<p><a href="https://Begaliev-Kirill.github.io/LabWork2/">https://Begaliev-Kirill.github.io/LabWork2/</a> or use this comands: </p><div class="fragment"><div class="line">doxygen</div>
+<p><a href="https://begaliev-kirill.github.io/LabWork2/">https://begaliev-kirill.github.io/LabWork2/</a> or use this comands: </p><div class="fragment"><div class="line">doxygen</div>
 <div class="line">export GTK_MODULES=&quot;&quot;</div>
 <div class="line">xdg-open docs/doxygen/index.html</div>
 </div><!-- fragment --> <h1><a class="anchor" id="autotoc_md10"></a>
