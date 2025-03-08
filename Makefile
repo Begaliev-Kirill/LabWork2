@@ -1,10 +1,10 @@
 PROJECT = game
-LIBPROJECT = $(PROJECT).a
+LIBPROJECT = lib$(PROJECT).a
 TESTPROJECT = test-$(PROJECT)
 
 CXX = g++
-CXXFLAGS = -Iinclude -std=c++17 -Werror -Wpedantic -Wall -g -fPIC
-LDXXFLAGS = $(CXXFLAGS) -L. -l:$(LIBPROJECT)
+CXXFLAGS = -Iinclude -std=c++17 -Werror -Wpedantic -Wall -g
+LDXXFLAGS = $(CXXFLAGS) -L. -l$(PROJECT)
 LDGTESTFLAGS = $(LDXXFLAGS) -lgtest_main -lgtest -lpthread
 AR = ar
 ARFLAGS = rsv
@@ -15,6 +15,7 @@ TESTDIR = test
 OBJDIR = obj
 BINDIR = bin
 TESTBINDIR = testbin
+DOCSDIR = docs
 
 #Files
 SRCS = $(filter-out $(SRCDIR)/main.cpp, $(wildcard $(SRCDIR)/*.cpp))
@@ -29,10 +30,10 @@ TARGET = $(BINDIR)/$(PROJECT)
 TESTTARGET = $(TESTBINDIR)/$(TESTPROJECT)
 
 .PHONY: default
-default: all;
-all: $(TARGET)
+default: all
+all: $(TARGET) depend
 
-$(shell mkdir -p $(OBJDIR) $(BINDIR) $(TESTBINDIR))
+$(shell mkdir -p $(OBJDIR) $(BINDIR) $(TESTBINDIR) $(DOCSDIR) $(DOCSDIR)/doxygen $(DOCSDIR)/images)
 
 #Project's building
 $(TARGET): $(MAINOBJ) $(LIBPROJECT)
@@ -59,16 +60,17 @@ test: $(TESTTARGET)
 
 .PHONY: clean
 
+depend:
+	$(CXX) -MM $(CXXFLAGS) $(SRCS) $(TESTSRCS) > $(DOCSDIR)/.depend
+
+-include $(DOCSDIR)/.depend
+
 clean:
 	rm -rf $(OBJDIR)/* $(BINDIR)/* $(TESTBINDIR)/* .depend
 
+cleandocs:
+	rm -rf $(DOCSDIR)/doxygen/*
+	rm -f $(DOCSDIR)/.depend
+
 cleanall: clean
-	rm -f $(PROJECT)
-	rm -f $(LIBPROJECT)
-	rm -f $(TESTPROJECT)
-	rm -rf $(OBJDIR) $(BINDIR) $(TESTBINDIR)
-
-depend:
-	$(CXX) -MM $(CXXFLAGS) $(SRCS) $(TESTSRCS) > .depend
-
--include .depend
+	rm -rf $(OBJDIR) $(BINDIR) $(TESTBINDIR) $(LIBPROJECT)

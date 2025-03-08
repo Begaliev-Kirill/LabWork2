@@ -1,0 +1,8 @@
+Card.o: src/Card.cpp include/Card.hpp
+GameManager.o: src/GameManager.cpp include/GameManager.hpp \
+ include/Player.hpp include/Hand.hpp include/Card.hpp
+Hand.o: src/Hand.cpp include/Hand.hpp include/Card.hpp
+Player.o: src/Player.cpp include/Player.hpp include/Hand.hpp \
+ include/Card.hpp
+test-game.o: test/test-game.cpp include/GameManager.hpp \
+ include/Player.hpp include/Hand.hpp include/Card.hpp
