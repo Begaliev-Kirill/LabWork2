@@ -1,0 +1,17 @@
+<map id="include/GameManager.hpp" name="include/GameManager.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,201,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="9,79,89,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,33,68,69,64,66,92,29"/>
+<area shape="rect" id="Node000003" href="$Player_8hpp." title=" " alt="" coords="113,79,203,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="114,29,143,66,139,69,110,33"/>
+<area shape="rect" id="Node000004" href="$Hand_8hpp." title=" " alt="" coords="116,152,200,177"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="161,104,161,138,155,138,155,104"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="32,225,95,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="144,179,91,219,88,215,141,175"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="119,225,197,251"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="161,178,161,212,155,212,155,178"/>
+<area shape="rect" id="Node000007" href="$Card_8hpp." title=" " alt="" coords="221,225,301,251"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="176,175,234,215,231,219,173,180"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="231,299,290,324"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="263,251,263,285,258,285,258,251"/>
+</map>
