@@ -4,7 +4,7 @@ GameManager class controls the game process and turns of events or actions
 
 #include "GameManager.hpp"
 
-void GameManager :: printPlayerCards(Player* player){
+void GameManager :: printPlayerCards(Player* player){ /*will be replaces*/
     std::vector<std::shared_ptr<Card>> playerCards = player->getPlayerHand() -> getCards();
     unsigned int playerCardsSize = playerCards.size();
     
